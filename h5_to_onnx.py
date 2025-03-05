@@ -15,7 +15,8 @@ model_filename = sys.argv[1]
 current_dir = os.getcwd()
 model_path = os.path.join(current_dir, model_filename)
 
-model = load_model(model_path)
+model = tf.keras.models.load_model(model_path)
+model.output_names=['output']
 
 onnx_model, _ = tf2onnx.convert.from_keras(model)
 onnx.save(onnx_model, 'new_model_eursat.onnx') 

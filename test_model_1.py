@@ -5,6 +5,8 @@ import cv2
 import os
 import sys
 
+print("")
+
 # ANSI escape codes for colors and bold text
 class bcolors:
     OKGREEN = '\033[92m'
@@ -40,11 +42,11 @@ CATEGORIES = [
 
 # --- 2. Load the Keras Model ---
 try:
-    print(f"Attempting to load model from path: {model_path}")
+    print(f"\nAttempting to load model from path: {model_path}")
     model = keras.models.load_model(model_path)
-    print(f"{bcolors.OKGREEN}Model successfully loaded from: {model_path}{bcolors.ENDC}")
+    print(f"\n{bcolors.OKGREEN}Model successfully loaded from: {model_path}{bcolors.ENDC}")
 except Exception as e:
-    print(f"{bcolors.FAIL}Error loading model from {model_path}: {e}{bcolors.ENDC}")
+    print(f"\n{bcolors.FAIL}Error loading model from {model_path}: {e}{bcolors.ENDC}")
     exit()  # Exit if model loading fails
 
 # --- 3. Load and Preprocess the Test Image ---
@@ -95,4 +97,4 @@ for i, category_name in enumerate(CATEGORIES):
     probability = predictions[0][i]
     print(f"  {category_name}: {(probability * 100):.2f}%")
 
-print("--- Prediction complete ---")
+print("\n--- Prediction complete ---\n")

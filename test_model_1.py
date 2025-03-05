@@ -5,6 +5,13 @@ import cv2
 import os
 import sys
 
+# ANSI escape codes for colors and bold text
+class bcolors:
+    OKGREEN = '\033[92m'
+    FAIL = '\033[91m'
+    BOLD = '\033[1m'
+    ENDC = '\033[0m'
+
 # --- 1. Define paths and categories ---
 
 if len(sys.argv) != 3:
@@ -28,17 +35,17 @@ CATEGORIES = [
     'Residential',
     'River',
     'SeaLake'
-] # ADJUST THIS LIST IF CATEGORIES ARE DIFFERENT
+]  # ADJUST THIS LIST IF CATEGORIES ARE DIFFERENT
 
 
 # --- 2. Load the Keras Model ---
 try:
     print(f"Attempting to load model from path: {model_path}")
     model = keras.models.load_model(model_path)
-    print(f"Model successfully loaded from: {model_path}")
+    print(f"{bcolors.OKGREEN}Model successfully loaded from: {model_path}{bcolors.ENDC}")
 except Exception as e:
-    print(f"Error loading model from {model_path}: {e}")
-    exit() # Exit if model loading fails
+    print(f"{bcolors.FAIL}Error loading model from {model_path}: {e}{bcolors.ENDC}")
+    exit()  # Exit if model loading fails
 
 # --- 3. Load and Preprocess the Test Image ---
 try:
@@ -54,10 +61,10 @@ try:
     input_image = np.expand_dims(normalized_array, axis=0)
 
 except FileNotFoundError as e:
-    print(f"File not found error: {e}")
+    print(f"{bcolors.FAIL}File not found error: {e}{bcolors.ENDC}")
     exit()
 except Exception as e:
-    print(f"Error loading and preprocessing image: {e}")
+    print(f"{bcolors.FAIL}Error loading and preprocessing image: {e}{bcolors.ENDC}")
     exit()
 
 
@@ -72,15 +79,15 @@ try:
     predicted_probability = predictions[0][predicted_class_index]
 
 except Exception as e:
-    print(f"Error during prediction: {e}")
+    print(f"{bcolors.FAIL}Error during prediction: {e}{bcolors.ENDC}")
     exit()
 
 
 # --- 5. Print the Prediction Results ---
 print("\n--- Prediction Results ---")
 print(f"Test Image: {image_path}")
-print(f"Predicted Category: {predicted_category_name}")
-print(f"Probability: {(predicted_probability * 100):.2f}%")
+print(f"{bcolors.BOLD}Predicted Category: {predicted_category_name}{bcolors.ENDC}")
+print(f"{bcolors.BOLD}Probability: {(predicted_probability * 100):.2f}%{bcolors.ENDC}")
 
 # Optional: Print probabilities for all categories (for more detailed output)
 print("\nProbabilities for all categories:")
@@ -89,5 +96,3 @@ for i, category_name in enumerate(CATEGORIES):
     print(f"  {category_name}: {(probability * 100):.2f}%")
 
 print("--- Prediction complete ---")
-
-#print("MADE IT HERE!")

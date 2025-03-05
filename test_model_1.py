@@ -78,7 +78,7 @@ except Exception as e:
 
 # --- 5. Print the Prediction Results ---
 print("\n--- Prediction Results ---")
-print(f"Test Image: {test_image_path}")
+print(f"Test Image: {image_path}")
 print(f"Predicted Category: {predicted_category_name}")
 print(f"Probability: {(predicted_probability * 100):.2f}%")
 
